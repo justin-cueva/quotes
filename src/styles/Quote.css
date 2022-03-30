@@ -1,0 +1,51 @@
+.quote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.quote__quote,
+.quote__author {
+  font-weight: 300;
+}
+
+.quote__quote {
+  position: relative;
+  text-align: center;
+  max-width: 75%;
+}
+
+.quote__author {
+  font-style: italic;
+  position: relative;
+  align-self: flex-end;
+}
+
+.quote__author::before {
+  content: "";
+  position: absolute;
+  border-bottom: 2px solid #000;
+  bottom: 40%;
+  left: -3.2rem;
+  width: 3rem;
+}
+
+.icon__left,
+.icon__right {
+  position: absolute;
+}
+
+.icon__left {
+  top: -0.8rem;
+  left: -3.2rem;
+}
+
+.icon__right {
+  bottom: -0.8rem;
+  right: -3.2rem;
+}
+
+.fs-small {
+  font-size: 1.4rem;
+}
