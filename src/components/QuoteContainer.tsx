@@ -1,4 +1,5 @@
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
+import { AiOutlineHeart } from "react-icons/ai";
 
 const QuoteContainer = () => {
   return (
@@ -19,6 +20,12 @@ const QuoteContainer = () => {
           </span>
         </div>
         <span className="quote__author fs-small">Steve Jobs</span>
+      </div>
+      <div className="buttons">
+        <button className="btn btn--new-quote">New Quote</button>
+        <span className="btn btn--heart-outline">
+          <AiOutlineHeart />
+        </span>
       </div>
     </div>
   );
