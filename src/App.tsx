@@ -1,5 +1,3 @@
-import "./App.css";
-// import Header from "./components/Header";
 import QuoteContainer from "./components/QuoteContainer";
 import "./App.css";
 
