@@ -3,8 +3,6 @@ import { connect, ConnectedProps } from "react-redux";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { addToFavorites, removeFromFavorites } from "../actions";
 import "../styles/CardButtons.css";
-import { Quote } from "./QuoteContainer";
-import useFetch from "../hooks/useFetch";
 
 const connector = connect(null, { addToFavorites, removeFromFavorites });
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -31,10 +29,10 @@ const CardButtons: React.FC<Props> = ({
   const addToFavoriteHandler = () => {
     if (!isFavorited) {
       setIsFavorited(true);
-      addToFavorites({ id: quote.slip.id, quote: quote.slip.advice });
+      addToFavorites({ id: quote.id, quote: quote.quote });
     } else {
       setIsFavorited(false);
-      removeFromFavorites(quote.slip.id);
+      removeFromFavorites(quote.id);
     }
   };
 

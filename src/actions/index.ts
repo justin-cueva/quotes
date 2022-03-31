@@ -1,4 +1,4 @@
-import { Quote } from "../components/QuoteContainer";
+import { Quote } from "../types";
 
 export const addToFavorites = (quote: Quote) => {
   return { type: "ADD_TO_FAVORITES", payload: quote };

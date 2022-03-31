@@ -5,13 +5,8 @@ import CardButtons from "./CardButtons";
 import "../styles/QuoteContainer.css";
 import useFetch from "../hooks/useFetch";
 
-export interface Quote {
-  id: number;
-  quote: string;
-}
-
 const QuoteContainer: React.FC = () => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const { data, isLoading, error, fetchData } = useFetch(
     "https://api.adviceslip.com/advice"
   );

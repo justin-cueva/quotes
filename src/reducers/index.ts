@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 
-import { Quote } from "../components/QuoteContainer";
+import { Quote } from "../types";
 
 type Actions =
   | { type: "ADD_TO_FAVORITES"; payload: string }
   | { type: "REMOVE_FROM_FAVORITES"; payload: number };
 
-const favoritesReducer = (state = [], action: Actions) => {
+const favoritesReducer = (state: Quote[] = [], action: Actions) => {
   switch (action.type) {
     case "ADD_TO_FAVORITES":
       return [...state, action.payload];

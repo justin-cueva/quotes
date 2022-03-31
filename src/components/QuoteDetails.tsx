@@ -1,9 +1,10 @@
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import "../styles/Quote.css";
 import { Oval } from "react-loader-spinner";
+import { Quote } from "../types";
 
 interface Props {
-  quote: any;
+  quote: Quote | undefined;
   isLoading: boolean;
 }
 
@@ -35,9 +36,7 @@ const QuoteDetails = ({ quote, isLoading }: Props) => {
           <span className="icon__right">
             <FaQuoteRight />
           </span>
-          <span className="fs-small">
-            {quote?.slip?.advice ? quote?.slip?.advice : null}
-          </span>
+          <span className="fs-small">{quote?.quote ? quote.quote : null}</span>
         </div>
       )}
     </div>

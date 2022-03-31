@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { Quote } from "../types";
 
 const useFetch = (url: string) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [data, setData] = useState<unknown>(null);
+  const [data, setData] = useState<Quote>();
   const [error, setError] = useState<any>();
 
   const fetchData = async (url: string) => {
@@ -15,7 +16,9 @@ const useFetch = (url: string) => {
         throw new Error(`${data.message.text}`);
       }
 
-      setData(data);
+      console.log(data);
+
+      setData({ id: data.slip.id, quote: data.slip.advice });
       setIsLoading(false);
     } catch (err) {
       setError(err);
