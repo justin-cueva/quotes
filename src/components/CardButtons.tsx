@@ -1,31 +1,41 @@
 import React, { useEffect, useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { addToFavorites, removeFromFavorites } from "../actions";
 import "../styles/CardButtons.css";
-
 import { Quote } from "./QuoteContainer";
+import useFetch from "../hooks/useFetch";
 
-interface Props {
-  setQuote: React.Dispatch<React.SetStateAction<Quote>>;
-}
+const connector = connect(null, { addToFavorites, removeFromFavorites });
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type Props = PropsFromRedux & {
+  quote: any;
+  fetchData: (url: string) => Promise<void>;
+};
 
-const CardButtons: React.FC<Props> = ({ setQuote }) => {
+const CardButtons: React.FC<Props> = ({
+  addToFavorites,
+  quote,
+  fetchData,
+  removeFromFavorites,
+}) => {
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
 
   const newQuoteHandler = async () => {
-    try {
-      const response = await fetch("	https://api.adviceslip.com/advice");
-      const { slip } = await response.json();
-      const { advice } = slip;
-
-      setQuote({ quote: advice, id: slip.id });
-    } catch (error) {
-      console.error(error);
-    }
+    setIsFavorited(false);
+    const randomQuoteId = Math.floor(Math.random() * 225);
+    const fakeId = 300;
+    await fetchData(`https://api.adviceslip.com/advice/${randomQuoteId}`);
   };
 
-  const favoriteHandler = () => {
-    console.log("adding to favorites..");
-    setIsFavorited((prevState) => (prevState ? false : true));
+  const addToFavoriteHandler = () => {
+    if (!isFavorited) {
+      setIsFavorited(true);
+      addToFavorites({ id: quote.slip.id, quote: quote.slip.advice });
+    } else {
+      setIsFavorited(false);
+      removeFromFavorites(quote.slip.id);
+    }
   };
 
   return (
@@ -33,7 +43,12 @@ const CardButtons: React.FC<Props> = ({ setQuote }) => {
       <button onClick={newQuoteHandler} className="btn btn--new-quote">
         New Quote
       </button>
-      <span className={`btn btn--heart-outline`} onClick={favoriteHandler}>
+      <span
+        className={`btn btn--heart-outline`}
+        onClick={() => {
+          addToFavoriteHandler();
+        }}
+      >
         {isFavorited ? (
           <AiFillHeart className="color-red" />
         ) : (
@@ -44,4 +59,4 @@ const CardButtons: React.FC<Props> = ({ setQuote }) => {
   );
 };
 
-export default CardButtons;
+export default connector(CardButtons);

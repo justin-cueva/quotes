@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import QuoteDetails from "./QuoteDetails";
 import CardButtons from "./CardButtons";
 import "../styles/QuoteContainer.css";
+import useFetch from "../hooks/useFetch";
 
 export interface Quote {
   id: number;
@@ -10,19 +11,28 @@ export interface Quote {
 }
 
 const QuoteContainer: React.FC = () => {
-  const [quote, setQuote] = useState<Quote>({
-    id: 99999,
-    quote: `Don't ever name files or folders using the word \"Final\".`,
-  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const { data, isLoading, error, fetchData } = useFetch(
+    "https://api.adviceslip.com/advice"
+  );
 
   useEffect(() => {
-    console.log(quote);
-  }, [quote]);
+    if (error?.name === "Error") {
+      setErrorMessage(error.message);
+    }
+    if (error && error?.name !== "Error") {
+      setErrorMessage("Something went wrong");
+    }
+  }, [error]);
 
   return (
     <div className="Quote-Container">
-      <QuoteDetails quote={quote} />
-      <CardButtons setQuote={setQuote} />
+      {error ? (
+        <p>Error: {errorMessage}</p>
+      ) : (
+        <QuoteDetails quote={data} isLoading={isLoading} />
+      )}
+      <CardButtons quote={data} fetchData={fetchData} />
     </div>
   );
 };
