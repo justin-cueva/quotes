@@ -16,42 +16,64 @@ const connector = connect(mapState, { removeFromFavorites });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const FavoriteQuotes = (props: PropsFromRedux) => {
-  const [counter, setCounter] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
+
   useEffect(() => {
     console.log(props.favorites);
   }, [props.favorites]);
 
   const heartClickHandler = (id: number) => {
     props.removeFromFavorites(id);
-    console.log(props.favorites);
   };
   //
+  const previousPageHandler = () => {
+    setPageNumber((prevPage) => prevPage - 1);
+  };
+
+  const nextPageHandler = () => {
+    setPageNumber((prevPage) => prevPage + 1);
+  };
+
+  const currentPageFavorites = () => {
+    const start = (pageNumber - 1) * 6;
+    const end = pageNumber * 6;
+    const currentPage = props.favorites.slice(start, end);
+    return currentPage;
+  };
+
+  const lastPage = Math.ceil(props.favorites.length / 6);
+
   return (
-    <div className="favorite-quotes">
-      {props.favorites?.length !== 0 ? (
-        props?.favorites?.map((quote: Quote) => {
-          return (
-            <div className="favorite-quotes__card" key={quote.id}>
-              <AiFillHeart
-                onClick={() => heartClickHandler(quote.id)}
-                className="color-red"
-              />
-              <span
-                onClick={() => {
-                  console.log(props.favorites);
-                  setCounter((prev) => {
-                    return prev + 1;
-                  });
-                }}
-              >
-                {quote.quote}
-              </span>
-            </div>
-          );
-        })
-      ) : (
-        <p>add some quotes to favorites</p>
-      )}
+    <div className="favorite-quotes__page">
+      <div className="favorite-quotes">
+        {props.favorites?.length !== 0 ? (
+          currentPageFavorites().map((quote: Quote) => {
+            return (
+              <div className="favorite-quotes__card" key={quote.id}>
+                <AiFillHeart
+                  onClick={() => heartClickHandler(quote.id)}
+                  className="color-red"
+                />
+                <span>{quote.quote}</span>
+              </div>
+            );
+          })
+        ) : (
+          <p>add some quotes to favorites</p>
+        )}
+      </div>
+      <div className="favorite-quotes__pagination">
+        {pageNumber !== 1 && (
+          <button className="btn--prev" onClick={previousPageHandler}>
+            prev
+          </button>
+        )}
+        {pageNumber !== lastPage && (
+          <button className="btn--next" onClick={nextPageHandler}>
+            next
+          </button>
+        )}
+      </div>
     </div>
   );
 };
