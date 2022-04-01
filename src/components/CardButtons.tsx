@@ -37,8 +37,6 @@ const CardButtons: React.FC<Props> = ({
 
     await fetchData(`https://api.adviceslip.com/advice/${randomQuoteId}`);
 
-    // since we are fetching a quote at random we could fetch a quote that we already favorited
-    // in that case we would immediatly set our state to favorited
     const isInFavorites = favorites.some((quote) => {
       return randomQuoteId === quote.id;
     });
@@ -63,7 +61,7 @@ const CardButtons: React.FC<Props> = ({
         New Quote
       </button>
       <span
-        className={`btn btn--heart-outline`}
+        className={`btn--heart-outline`}
         onClick={() => {
           addToFavoriteHandler();
         }}

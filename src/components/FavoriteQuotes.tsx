@@ -42,11 +42,12 @@ const FavoriteQuotes = (props: PropsFromRedux) => {
   };
 
   const lastPage = Math.ceil(props.favorites.length / 6);
+  const favoritesExist = props.favorites?.length !== 0;
 
   return (
     <div className="favorite-quotes__page">
       <div className="favorite-quotes">
-        {props.favorites?.length !== 0 ? (
+        {favoritesExist ? (
           currentPageFavorites().map((quote: Quote) => {
             return (
               <div className="favorite-quotes__card" key={quote.id}>
@@ -63,13 +64,13 @@ const FavoriteQuotes = (props: PropsFromRedux) => {
         )}
       </div>
       <div className="favorite-quotes__pagination">
-        {pageNumber !== 1 && (
-          <button className="btn--prev" onClick={previousPageHandler}>
+        {pageNumber !== 1 && favoritesExist && (
+          <button className="btn btn--prev" onClick={previousPageHandler}>
             prev
           </button>
         )}
-        {pageNumber !== lastPage && (
-          <button className="btn--next" onClick={nextPageHandler}>
+        {pageNumber !== lastPage && favoritesExist && (
+          <button className="btn btn--next" onClick={nextPageHandler}>
             next
           </button>
         )}
