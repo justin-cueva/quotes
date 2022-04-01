@@ -1,11 +1,17 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import { BsBrightnessHighFill, BsBrightnessHigh } from "react-icons/bs";
 
 import "../styles/Header.css";
 
 const Header = () => {
+  let { pathname } = useLocation();
+
+  useEffect(() => {
+    console.log(pathname);
+  }, [pathname]);
+
   const [theme, setTheme] = useState<string>("light");
 
   const toggleThemeHandler = () => {
@@ -25,6 +31,10 @@ const Header = () => {
       <BsBrightnessHigh className="icon--theme" />
     );
 
+  const logPathnaem = () => {
+    console.log(pathname);
+  };
+
   return (
     <header className="header ">
       <span onClick={toggleThemeHandler} className="btn--theme">
@@ -32,9 +42,24 @@ const Header = () => {
       </span>
 
       <div className="header__right ">
-        <Link className="link--favorites color-black" to={"/favorites"}>
-          Favorites
-        </Link>
+        {pathname === "/favorites" ? (
+          <Link
+            onClick={logPathnaem}
+            className="link--favorites color-black"
+            to={"/"}
+          >
+            Search
+          </Link>
+        ) : (
+          <Link
+            onClick={logPathnaem}
+            className="link--favorites color-black"
+            to={"/favorites"}
+          >
+            Favorites
+          </Link>
+        )}
+
         <button className="btn--auth" onClick={signInHandler}>
           Sign In
         </button>

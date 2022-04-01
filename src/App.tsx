@@ -10,6 +10,7 @@ function App() {
         <Header />
         <Routes>
           <Route path={"/"} element={<QuoteContainer />} />
+          <Route path={"/favorites"} element={<div>Favorites</div>} />
         </Routes>
       </BrowserRouter>
     </div>
