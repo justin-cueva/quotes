@@ -1,31 +1,51 @@
 import { connect, ConnectedProps } from "react-redux";
 import { Quote } from "../types";
 import "../styles/FavoriteQuotes.css";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { useEffect } from "react";
+import { AiFillHeart } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { removeFromFavorites } from "../actions/index";
 
-type RootState = {
-  favorites?: Quote[] | undefined;
-};
+interface RootState {
+  favorites: Quote[];
+}
+console.log("");
 const mapState = (state: RootState) => {
-  return { favorites: state?.favorites };
+  return { favorites: state.favorites };
 };
-const connector = connect(mapState);
+const connector = connect(mapState, { removeFromFavorites });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const FavoriteQuotes = ({ favorites }: PropsFromRedux) => {
+const FavoriteQuotes = (props: PropsFromRedux) => {
+  const [counter, setCounter] = useState(0);
   useEffect(() => {
-    console.log(!!favorites?.[0]);
-  }, [favorites]);
+    console.log(props.favorites);
+  }, [props.favorites]);
 
+  const heartClickHandler = (id: number) => {
+    props.removeFromFavorites(id);
+    console.log(props.favorites);
+  };
+  //
   return (
     <div className="favorite-quotes">
-      {!!favorites?.[0] ? (
-        favorites.map((quote: Quote) => {
+      {props.favorites?.length !== 0 ? (
+        props?.favorites?.map((quote: Quote) => {
           return (
             <div className="favorite-quotes__card" key={quote.id}>
-              <AiFillHeart className="color-red" />
-              <span>{quote.quote}</span>
+              <AiFillHeart
+                onClick={() => heartClickHandler(quote.id)}
+                className="color-red"
+              />
+              <span
+                onClick={() => {
+                  console.log(props.favorites);
+                  setCounter((prev) => {
+                    return prev + 1;
+                  });
+                }}
+              >
+                {quote.quote}
+              </span>
             </div>
           );
         })

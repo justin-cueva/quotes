@@ -16,8 +16,6 @@ const useFetch = (url: string) => {
         throw new Error(`${data.message.text}`);
       }
 
-      console.log(data);
-
       setData({ id: data.slip.id, quote: data.slip.advice });
       setIsLoading(false);
     } catch (err) {

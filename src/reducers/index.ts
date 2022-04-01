@@ -11,9 +11,11 @@ const favoritesReducer = (state: Quote[] = [], action: Actions) => {
     case "ADD_TO_FAVORITES":
       return [...state, action.payload];
     case "REMOVE_FROM_FAVORITES":
-      return state.filter((quote: Quote) => {
+      const arr = state.filter((quote: Quote) => {
         return quote.id !== action.payload;
       });
+      console.log(arr === [...arr]);
+      return [...arr];
     default:
       return state;
   }
