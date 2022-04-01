@@ -1,6 +1,10 @@
 .buttons {
   display: flex;
   align-items: center;
+  max-width: 40rem;
+  width: 100%;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .btn--new-quote {
