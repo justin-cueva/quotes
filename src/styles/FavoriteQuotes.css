@@ -1,0 +1,30 @@
+.favorite-quotes {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.favorite-quotes__card {
+  border-radius: 12px;
+  padding: 1.2rem;
+  background-color: #fff;
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  justify-content: center;
+}
+
+.favorite-quotes__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2.4rem;
+  gap: 1.2rem;
+}
+
+.btn--prev,
+.btn--next {
+  background-color: #fff;
+}

@@ -3,8 +3,19 @@ import { connect, ConnectedProps } from "react-redux";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { addToFavorites, removeFromFavorites } from "../actions/index";
 import "../styles/CardButtons.css";
+import { Quote } from "../types";
 
-const connector = connect(null, { addToFavorites, removeFromFavorites });
+interface RootState {
+  favorites: Quote[];
+}
+const mapStateToProps = (state: RootState) => {
+  return { favorites: state.favorites };
+};
+const connector = connect(mapStateToProps, {
+  addToFavorites,
+  removeFromFavorites,
+});
+
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & {
   quote: any;
@@ -16,14 +27,22 @@ const CardButtons: React.FC<Props> = ({
   quote,
   fetchData,
   removeFromFavorites,
+  favorites,
 }) => {
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
 
   const newQuoteHandler = async () => {
     setIsFavorited(false);
     const randomQuoteId = Math.floor(Math.random() * 225);
-    const fakeId = 300;
+
     await fetchData(`https://api.adviceslip.com/advice/${randomQuoteId}`);
+
+    const isInFavorites = favorites.some((quote) => {
+      return randomQuoteId === quote.id;
+    });
+    if (isInFavorites) {
+      setIsFavorited(true);
+    }
   };
 
   const addToFavoriteHandler = () => {
@@ -42,7 +61,7 @@ const CardButtons: React.FC<Props> = ({
         New Quote
       </button>
       <span
-        className={`btn btn--heart-outline`}
+        className={`btn--heart-outline`}
         onClick={() => {
           addToFavoriteHandler();
         }}

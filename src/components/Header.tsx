@@ -7,11 +7,6 @@ import "../styles/Header.css";
 
 const Header = () => {
   let { pathname } = useLocation();
-
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
-
   const [theme, setTheme] = useState<string>("light");
 
   const toggleThemeHandler = () => {
@@ -31,10 +26,6 @@ const Header = () => {
       <BsBrightnessHigh className="icon--theme" />
     );
 
-  const logPathnaem = () => {
-    console.log(pathname);
-  };
-
   return (
     <header className="header ">
       <span onClick={toggleThemeHandler} className="btn--theme">
@@ -43,19 +34,11 @@ const Header = () => {
 
       <div className="header__right ">
         {pathname === "/favorites" ? (
-          <Link
-            onClick={logPathnaem}
-            className="link--favorites color-black"
-            to={"/"}
-          >
+          <Link className="link--favorites color-black" to={"/"}>
             Search
           </Link>
         ) : (
-          <Link
-            onClick={logPathnaem}
-            className="link--favorites color-black"
-            to={"/favorites"}
-          >
+          <Link className="link--favorites color-black" to={"/favorites"}>
             Favorites
           </Link>
         )}
