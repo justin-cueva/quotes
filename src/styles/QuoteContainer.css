@@ -8,3 +8,12 @@
   border-radius: 12px;
   margin: 0 3.2rem;
 }
+
+.container {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+}

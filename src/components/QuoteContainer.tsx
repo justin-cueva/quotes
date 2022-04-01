@@ -21,13 +21,15 @@ const QuoteContainer: React.FC = () => {
   }, [error]);
 
   return (
-    <div className="Quote-Container">
-      {error ? (
-        <p>Error: {errorMessage}</p>
-      ) : (
-        <QuoteDetails quote={data} isLoading={isLoading} />
-      )}
-      <CardButtons quote={data} fetchData={fetchData} />
+    <div className="container">
+      <div className="Quote-Container">
+        {error ? (
+          <p>Error: {errorMessage}</p>
+        ) : (
+          <QuoteDetails quote={data} isLoading={isLoading} />
+        )}
+        <CardButtons quote={data} fetchData={fetchData} />
+      </div>
     </div>
   );
 };
