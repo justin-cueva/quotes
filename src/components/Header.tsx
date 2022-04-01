@@ -1,37 +1,34 @@
-import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-
-import { BsBrightnessHighFill, BsBrightnessHigh } from "react-icons/bs";
+import { BsBrightnessHighFill } from "react-icons/bs";
+import { useTheme, Theme } from "../ThemeProvider";
 
 import "../styles/Header.css";
 
 const Header = () => {
+  const { theme, setTheme } = useTheme();
+  console.log(theme);
   let { pathname } = useLocation();
-  const [theme, setTheme] = useState<string>("light");
-
-  const toggleThemeHandler = () => {
-    setTheme((prevTheme) => {
-      return prevTheme === "light" ? "dark" : "light";
-    });
-  };
 
   const signInHandler = () => {
     console.log("signing in...");
   };
 
   const themeIcon =
-    theme === "light" ? (
-      <BsBrightnessHighFill className="icon--theme" />
+    theme === Theme.Dark ? (
+      <BsBrightnessHighFill
+        className={`icon--theme col-light`}
+        onClick={() => setTheme(Theme.Light)}
+      />
     ) : (
-      <BsBrightnessHigh className="icon--theme" />
+      <BsBrightnessHighFill
+        className="icon--theme col-dark"
+        onClick={() => setTheme(Theme.Dark)}
+      />
     );
 
   return (
-    <header className="header ">
-      <span onClick={toggleThemeHandler} className="btn--theme">
-        {themeIcon}
-      </span>
-
+    <header className="header">
+      <span className="btn--theme">{themeIcon}</span>
       <div className="header__right ">
         {pathname === "/favorites" ? (
           <Link className="link--favorites color-black" to={"/"}>

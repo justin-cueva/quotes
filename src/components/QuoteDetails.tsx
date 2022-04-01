@@ -2,6 +2,7 @@ import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import "../styles/Quote.css";
 import { Oval } from "react-loader-spinner";
 import { Quote } from "../types";
+import { useTheme, Theme } from "../ThemeProvider";
 
 interface Props {
   quote: Quote | undefined;
@@ -9,6 +10,10 @@ interface Props {
 }
 
 const QuoteDetails = ({ quote, isLoading }: Props) => {
+  const { theme } = useTheme();
+
+  const color = theme === Theme.Light ? "col-grey-900" : "col-grey-100";
+
   const loadingSpinner = (
     <div className="quote">
       <Oval
@@ -25,7 +30,7 @@ const QuoteDetails = ({ quote, isLoading }: Props) => {
 
   return (
     <div className="quote">
-      <div className="quote__heading">Quote</div>
+      <div className={`quote__heading ${color}`}>Quote</div>
       {isLoading ? (
         loadingSpinner
       ) : (
@@ -36,7 +41,9 @@ const QuoteDetails = ({ quote, isLoading }: Props) => {
           <span className="icon__right">
             <FaQuoteRight />
           </span>
-          <span className="fs-small">{quote?.quote ? quote.quote : null}</span>
+          <span className={`fs-small ${color}`}>
+            {quote?.quote ? quote.quote : null}
+          </span>
         </div>
       )}
     </div>

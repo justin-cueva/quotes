@@ -4,6 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { addToFavorites, removeFromFavorites } from "../actions/index";
 import "../styles/CardButtons.css";
 import { Quote } from "../types";
+import { useTheme, Theme } from "../ThemeProvider";
 
 interface RootState {
   favorites: Quote[];
@@ -29,6 +30,7 @@ const CardButtons: React.FC<Props> = ({
   removeFromFavorites,
   favorites,
 }) => {
+  const { theme } = useTheme();
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
 
   const newQuoteHandler = async () => {
@@ -45,6 +47,8 @@ const CardButtons: React.FC<Props> = ({
     }
   };
 
+  const heartBtnColor = theme === Theme.Light ? "col-grey-900" : "col-grey-100";
+
   const addToFavoriteHandler = () => {
     if (!isFavorited) {
       setIsFavorited(true);
@@ -57,7 +61,10 @@ const CardButtons: React.FC<Props> = ({
 
   return (
     <div className="buttons">
-      <button onClick={newQuoteHandler} className="btn btn--new-quote">
+      <button
+        onClick={newQuoteHandler}
+        className="btn btn--new-quote bg-grey-medium"
+      >
         New Quote
       </button>
       <span
@@ -69,7 +76,7 @@ const CardButtons: React.FC<Props> = ({
         {isFavorited ? (
           <AiFillHeart className="color-red" />
         ) : (
-          <AiOutlineHeart />
+          <AiOutlineHeart className={heartBtnColor} />
         )}
       </span>
     </div>

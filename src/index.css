@@ -12,3 +12,95 @@ body {
   font-size: 2rem;
   font-family: sans-serif;
 }
+
+/* 
+#212529
+#343A40 // grey-dark
+#495057
+#6C757D
+#ADB5BD // grey-medium
+#CED4DA
+#DEE2E6 
+#E9ECEF //grey-light
+#F8F9FA
+*/
+
+/* ******************* */
+/* BACKGROUND COLORS */
+/* ******************* */
+
+.bg-grey-100 {
+  background-color: #f8f9fa;
+}
+.bg-grey-200 {
+  background-color: #e9ecef;
+}
+.bg-grey-300 {
+  background-color: #dee2e6;
+}
+.bg-grey-400 {
+  background-color: #ced4da;
+}
+.bg-grey-500 {
+  background-color: #adb5bd;
+}
+.bg-grey-600 {
+  background-color: #6c757d;
+}
+.bg-grey-700 {
+  background-color: #495057;
+}
+.bg-grey-800 {
+  background-color: #24292d;
+}
+.bg-grey-900 {
+  background-color: #212529;
+}
+
+/* *************** */
+/* COLORS */
+/* *************** */
+
+.col-grey-100 {
+  color: #f8f9fa;
+}
+.col-grey-200 {
+  color: #e9ecef;
+}
+.col-grey-300 {
+  color: #dee2e6;
+}
+.col-grey-400 {
+  color: #ced4da;
+}
+.col-grey-500 {
+  color: #adb5bd;
+}
+.col-grey-600 {
+  color: #6c757d;
+}
+.col-grey-700 {
+  color: #495057;
+}
+.col-grey-800 {
+  color: #343a40;
+}
+.col-grey-900 {
+  color: #212529;
+}
+
+.bg-light {
+  background-color: #f8f9fa;
+}
+
+.bg-dark {
+  background-color: #212529;
+}
+
+.col-light {
+  color: #f8f9fa;
+}
+
+.col-dark {
+  color: #212529;
+}
