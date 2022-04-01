@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { addToFavorites, removeFromFavorites } from "../actions";
+import { addToFavorites, removeFromFavorites } from "../actions/index";
 import "../styles/CardButtons.css";
 
 const connector = connect(null, { addToFavorites, removeFromFavorites });
