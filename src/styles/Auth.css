@@ -1,7 +1,6 @@
 .auth-container {
   gap: 2.4rem;
   width: 100%;
-  background-color: #fff;
   padding: 2rem;
   border-radius: 12px;
   margin: 0 0.8rem;
@@ -60,8 +59,6 @@
   border-radius: 8px;
   border: none;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  background-color: #343a40;
-  color: #fff;
 }
 
 .btn--change-form-state {
