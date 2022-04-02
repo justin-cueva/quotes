@@ -39,7 +39,11 @@ const Header = () => {
           </Link>
         )}
 
-        <Link to={"/signin"} className="btn--auth" onClick={signInHandler}>
+        <Link
+          to={"/auth"}
+          className="btn--auth col-grey-900"
+          onClick={signInHandler}
+        >
           Sign In
         </Link>
       </div>

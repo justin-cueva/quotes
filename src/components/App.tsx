@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import QuoteContainer from "./QuoteContainer";
 import FavoriteQuotes from "./FavoriteQuotes";
 import Header from "./Header";
-import SignIn from "./SignIn";
+import SignIn from "./Auth";
 import "../styles/App.css";
 import { ThemeContext, Theme } from "../hooks/Theme";
 
@@ -21,7 +21,7 @@ function App() {
           <Routes>
             <Route path={"/"} element={<QuoteContainer />} />
             <Route path={"/favorites"} element={<FavoriteQuotes />} />
-            <Route path={"/signin"} element={<SignIn />} />
+            <Route path={"/auth"} element={<SignIn />} />
           </Routes>
         </BrowserRouter>
       </ThemeContext.Provider>

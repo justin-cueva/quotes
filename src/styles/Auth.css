@@ -40,6 +40,12 @@
   border: none;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   width: 100%;
+  font-size: 1.6rem;
+}
+
+.auth__field input:focus {
+  outline: #000;
+  z-index: 3;
 }
 
 .auth__buttons {
@@ -48,7 +54,7 @@
   gap: 1.8rem;
 }
 
-.auth__buttons button {
+.btn--submit {
   font-size: 1.6rem;
   padding: 1rem 2rem;
   border-radius: 8px;
@@ -58,7 +64,9 @@
   color: #fff;
 }
 
-.auth__buttons--link {
-  color: #000;
+.btn--change-form-state {
   text-decoration: none;
+  font-size: 1.6rem;
+  background-color: transparent;
+  border: none;
 }
