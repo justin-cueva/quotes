@@ -1,21 +1,36 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import "../styles/Auth.css";
 import { useTheme, Theme } from "../hooks/Theme";
 
 const Auth = () => {
-  const { theme } = useTheme();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
   const [formState, setFormState] = useState<string>("LOGIN");
+  const { theme } = useTheme();
 
-  const loginHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("logging in ....");
+  const clearFields = () => {
+    if (emailRef.current) emailRef.current.value = "";
+    if (passwordRef.current) passwordRef.current.value = "";
   };
 
-  const createAccountHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const register = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("creating account .....");
+    console.log(emailRef.current?.value);
+    console.log(passwordRef.current?.value);
+    clearFields();
   };
+
+  const login = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("logging in ....");
+    console.log(emailRef.current?.value);
+    console.log(passwordRef.current?.value);
+    clearFields();
+  };
+
+  const logout = () => {};
 
   const bg = theme === Theme.Light ? "bg-grey-100" : "bg-grey-900";
   const col = theme === Theme.Light ? "col-grey-900" : "col-grey-100";
@@ -26,7 +41,7 @@ const Auth = () => {
         <form
           className="form--auth"
           onSubmit={(e) => {
-            formState === "LOGIN" ? loginHandler(e) : createAccountHandler(e);
+            formState === "LOGIN" ? login(e) : register(e);
           }}
         >
           <h2 className={`auth__heading ${col}`}>
@@ -37,13 +52,23 @@ const Auth = () => {
               <label className={col} htmlFor="email">
                 Your Email
               </label>
-              <input autoComplete="off" name="email" type={"email"} />
+              <input
+                ref={emailRef}
+                autoComplete="off"
+                name="email"
+                type={"email"}
+              />
             </div>
             <div className="auth__field">
               <label className={col} htmlFor="password">
                 Your Password
               </label>
-              <input autoComplete="off" name="password" type={"password"} />
+              <input
+                ref={passwordRef}
+                autoComplete="off"
+                name="password"
+                type={"password"}
+              />
             </div>
           </div>
           <div className="auth__buttons">
@@ -55,6 +80,7 @@ const Auth = () => {
             </button>
             <button
               onClick={() => {
+                clearFields();
                 setFormState((prev) => {
                   return prev === "LOGIN" ? "CREATE" : "LOGIN";
                 });
