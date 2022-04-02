@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { addToFavorites, removeFromFavorites } from "../actions/index";
+
 import "../styles/CardButtons.css";
+import { addToFavorites, removeFromFavorites } from "../actions/index";
 import { Quote } from "../types";
-import { useTheme, Theme } from "../ThemeProvider";
+import { useTheme, Theme } from "../hooks/Theme";
 
 interface RootState {
   favorites: Quote[];

@@ -1,11 +1,11 @@
-import QuoteContainer from "./components/QuoteContainer";
-import FavoriteQuotes from "./components/FavoriteQuotes";
-import Header from "./components/Header";
-import "./App.css";
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState, useEffect } from "react";
-import React from "react";
-import { ThemeContext, Theme } from "./ThemeProvider";
+
+import QuoteContainer from "./QuoteContainer";
+import FavoriteQuotes from "./FavoriteQuotes";
+import Header from "./Header";
+import "../styles/App.css";
+import { ThemeContext, Theme } from "../hooks/Theme";
 
 function App() {
   const [theme, setTheme] = useState(Theme.Light);

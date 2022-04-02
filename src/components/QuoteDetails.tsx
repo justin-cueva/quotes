@@ -1,8 +1,9 @@
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
-import "../styles/Quote.css";
 import { Oval } from "react-loader-spinner";
+
+import "../styles/Quote.css";
 import { Quote } from "../types";
-import { useTheme, Theme } from "../ThemeProvider";
+import { useTheme, Theme } from "../hooks/Theme";
 
 interface Props {
   quote: Quote | undefined;

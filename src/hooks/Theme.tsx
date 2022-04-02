@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from "react";
+import { createContext, useContext } from "react";
 
 export enum Theme {
   Dark = "Dark",

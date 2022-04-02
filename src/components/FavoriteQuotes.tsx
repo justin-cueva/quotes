@@ -2,13 +2,13 @@ import { connect, ConnectedProps } from "react-redux";
 import { Quote } from "../types";
 import "../styles/FavoriteQuotes.css";
 import { AiFillHeart } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { removeFromFavorites } from "../actions/index";
 
 interface RootState {
   favorites: Quote[];
 }
-console.log("");
+
 const mapState = (state: RootState) => {
   return { favorites: state.favorites };
 };
@@ -17,10 +17,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const FavoriteQuotes = (props: PropsFromRedux) => {
   const [pageNumber, setPageNumber] = useState(1);
-
-  useEffect(() => {
-    console.log(props.favorites);
-  }, [props.favorites]);
 
   const heartClickHandler = (id: number) => {
     props.removeFromFavorites(id);

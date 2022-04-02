@@ -1,12 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import { BsBrightnessHighFill } from "react-icons/bs";
-import { useTheme, Theme } from "../ThemeProvider";
 
+import { BsBrightnessHighFill } from "react-icons/bs";
+import { useTheme, Theme } from "../hooks/Theme";
 import "../styles/Header.css";
 
 const Header = () => {
   const { theme, setTheme } = useTheme();
-  console.log(theme);
   let { pathname } = useLocation();
 
   const signInHandler = () => {

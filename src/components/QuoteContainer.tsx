@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import QuoteDetails from "./QuoteDetails";
 import CardButtons from "./CardButtons";
 import "../styles/QuoteContainer.css";
 import useFetch from "../hooks/useFetch";
-import { useTheme, Theme } from "../ThemeProvider";
+import { useTheme, Theme } from "../hooks/Theme";
 
 const QuoteContainer: React.FC = () => {
   const { theme } = useTheme();
