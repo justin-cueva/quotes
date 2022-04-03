@@ -1,36 +1,63 @@
-import { useState, useRef } from "react";
+import { useEffect, useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
+import {
+  createUserWithEmailAndPassword,
+  // onAuthStateChanged,
+  signInWithEmailAndPassword,
+  // signOut,
+} from "firebase/auth";
 
+import { auth } from "../firebase/firebase-config";
+import { login as setLogin, logout as setLogout } from "../actions";
 import "../styles/Auth.css";
 import { useTheme, Theme } from "../hooks/Theme";
 
-const Auth = () => {
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+const connector = connect(null, { setLogin, setLogout });
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const Auth = ({ setLogin, setLogout }: PropsFromRedux) => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [formState, setFormState] = useState<string>("LOGIN");
   const { theme } = useTheme();
 
+  useEffect(() => {
+    const userId = localStorage.getItem("isLoggedIn");
+    if (userId) setLogin(userId);
+    console.log(userId);
+  }, []);
+
   const clearFields = () => {
-    if (emailRef.current) emailRef.current.value = "";
-    if (passwordRef.current) passwordRef.current.value = "";
+    if (email) setEmail("");
+    if (password) setPassword("");
   };
 
-  const register = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("creating account .....");
-    console.log(emailRef.current?.value);
-    console.log(passwordRef.current?.value);
+  const register = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(user);
+    } catch (error) {
+      console.error(error);
+    }
     clearFields();
   };
 
-  const login = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("logging in ....");
-    console.log(emailRef.current?.value);
-    console.log(passwordRef.current?.value);
+  const login = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      console.log(user.user.uid);
+      setLogin(user.user.uid);
+    } catch (error) {
+      console.error(error);
+    }
     clearFields();
   };
 
-  const logout = () => {};
+  const logout = async () => {
+    setLogout();
+  };
 
   const bg = theme === Theme.Light ? "bg-grey-100" : "bg-grey-900";
   const col = theme === Theme.Light ? "col-grey-900" : "col-grey-100";
@@ -53,10 +80,11 @@ const Auth = () => {
                 Your Email
               </label>
               <input
-                ref={emailRef}
+                value={email}
                 autoComplete="off"
                 name="email"
                 type={"email"}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="auth__field">
@@ -64,7 +92,8 @@ const Auth = () => {
                 Your Password
               </label>
               <input
-                ref={passwordRef}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 autoComplete="off"
                 name="password"
                 type={"password"}
@@ -92,6 +121,9 @@ const Auth = () => {
                 ? "Create new account"
                 : "Login with existing account"}
             </button>
+            <button type="button" onClick={logout}>
+              logout temp
+            </button>
           </div>
         </form>
       </div>
@@ -99,4 +131,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default connector(Auth);

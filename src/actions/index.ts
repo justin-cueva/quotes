@@ -7,3 +7,13 @@ export const addToFavorites = (quote: Quote) => {
 export const removeFromFavorites = (id: number) => {
   return { type: "REMOVE_FROM_FAVORITES", payload: id };
 };
+
+export const login = (userId: string) => {
+  localStorage.setItem("isLoggedIn", userId);
+  return { type: "LOGIN", payload: userId };
+};
+
+export const logout = () => {
+  localStorage.removeItem("isLoggedIn");
+  return { type: "LOGOUT" };
+};
