@@ -64,7 +64,7 @@ const CardButtons: React.FC<Props> = ({
     <div className="buttons">
       <button
         onClick={newQuoteHandler}
-        className="btn btn--new-quote bg-grey-medium"
+        className="btn btn--new-quote bg-grey-medium col-grey-900"
       >
         New Quote
       </button>
