@@ -4,25 +4,8 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import "../styles/CardButtons.css";
 import { addToFavorites, removeFromFavorites } from "../actions/index";
-import { Quote } from "../types";
+import { Quote, AuthType } from "../types";
 import { useTheme, Theme } from "../hooks/Theme";
-
-interface RootState {
-  favorites: Quote[];
-}
-const mapStateToProps = (state: RootState) => {
-  return { favorites: state.favorites };
-};
-const connector = connect(mapStateToProps, {
-  addToFavorites,
-  removeFromFavorites,
-});
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type Props = PropsFromRedux & {
-  quote: any;
-  fetchData: (url: string) => Promise<void>;
-};
 
 const CardButtons: React.FC<Props> = ({
   addToFavorites,
@@ -30,6 +13,7 @@ const CardButtons: React.FC<Props> = ({
   fetchData,
   removeFromFavorites,
   favorites,
+  auth,
 }) => {
   const { theme } = useTheme();
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
@@ -68,12 +52,7 @@ const CardButtons: React.FC<Props> = ({
       >
         New Quote
       </button>
-      <span
-        className={`btn--heart-outline`}
-        onClick={() => {
-          addToFavoriteHandler();
-        }}
-      >
+      <span className={`btn--heart-outline`} onClick={addToFavoriteHandler}>
         {isFavorited ? (
           <AiFillHeart className="color-red" />
         ) : (
@@ -82,6 +61,24 @@ const CardButtons: React.FC<Props> = ({
       </span>
     </div>
   );
+};
+
+interface RootState {
+  favorites: Quote[];
+  auth: AuthType;
+}
+const mapStateToProps = (state: RootState) => {
+  return { favorites: state.favorites, auth: state.auth };
+};
+const connector = connect(mapStateToProps, {
+  addToFavorites,
+  removeFromFavorites,
+});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type Props = PropsFromRedux & {
+  quote: any;
+  fetchData: (url: string) => Promise<void>;
 };
 
 export default connector(CardButtons);

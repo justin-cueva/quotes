@@ -1,5 +1,5 @@
 import { connect, ConnectedProps } from "react-redux";
-import { Quote } from "../types";
+import { Quote, AuthType } from "../types";
 import "../styles/FavoriteQuotes.css";
 import { AiFillHeart } from "react-icons/ai";
 import { useState } from "react";
@@ -7,10 +7,11 @@ import { removeFromFavorites } from "../actions/index";
 
 interface RootState {
   favorites: Quote[];
+  auth: AuthType;
 }
 
 const mapState = (state: RootState) => {
-  return { favorites: state.favorites };
+  return { favorites: state.favorites, auth: state.auth };
 };
 const connector = connect(mapState, { removeFromFavorites });
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -21,7 +22,7 @@ const FavoriteQuotes = (props: PropsFromRedux) => {
   const heartClickHandler = (id: number) => {
     props.removeFromFavorites(id);
   };
-  //
+
   const previousPageHandler = () => {
     setPageNumber((prevPage) => prevPage - 1);
   };
@@ -43,6 +44,9 @@ const FavoriteQuotes = (props: PropsFromRedux) => {
   return (
     <div className="favorite-quotes__page">
       <div className="favorite-quotes">
+        {favoritesExist && !props.auth.isLoggedIn && (
+          <h3>Sign In to save to favorites</h3>
+        )}
         {favoritesExist ? (
           currentPageFavorites().map((quote: Quote) => {
             return (
