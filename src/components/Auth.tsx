@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
   // onAuthStateChanged,
@@ -8,24 +9,19 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../firebase/firebase-config";
-import { login as setLogin, logout as setLogout } from "../actions";
+import { login as setLogin } from "../actions";
 import "../styles/Auth.css";
 import { useTheme, Theme } from "../hooks/Theme";
 
-const connector = connect(null, { setLogin, setLogout });
+const connector = connect(null, { setLogin });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const Auth = ({ setLogin, setLogout }: PropsFromRedux) => {
+const Auth = ({ setLogin }: PropsFromRedux) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [formState, setFormState] = useState<string>("LOGIN");
   const { theme } = useTheme();
-
-  useEffect(() => {
-    const userId = localStorage.getItem("isLoggedIn");
-    if (userId) setLogin(userId);
-    console.log(userId);
-  }, []);
 
   const clearFields = () => {
     if (email) setEmail("");
@@ -37,6 +33,7 @@ const Auth = ({ setLogin, setLogout }: PropsFromRedux) => {
       e.preventDefault();
       const user = await createUserWithEmailAndPassword(auth, email, password);
       console.log(user);
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -49,14 +46,11 @@ const Auth = ({ setLogin, setLogout }: PropsFromRedux) => {
       const user = await signInWithEmailAndPassword(auth, email, password);
       console.log(user.user.uid);
       setLogin(user.user.uid);
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
     clearFields();
-  };
-
-  const logout = async () => {
-    setLogout();
   };
 
   const bg = theme === Theme.Light ? "bg-grey-100" : "bg-grey-900";
@@ -120,9 +114,6 @@ const Auth = ({ setLogin, setLogout }: PropsFromRedux) => {
               {formState === "LOGIN"
                 ? "Create new account"
                 : "Login with existing account"}
-            </button>
-            <button type="button" onClick={logout}>
-              logout temp
             </button>
           </div>
         </form>

@@ -15,5 +15,6 @@ export const login = (userId: string) => {
 
 export const logout = () => {
   localStorage.removeItem("isLoggedIn");
+  console.log("removed");
   return { type: "LOGOUT" };
 };

@@ -1,16 +1,25 @@
 import { Link, useLocation } from "react-router-dom";
+import { connect, ConnectedProps } from "react-redux";
 
+import { logout } from "../actions";
 import { BsBrightnessHighFill } from "react-icons/bs";
 import { useTheme, Theme } from "../hooks/Theme";
 import "../styles/Header.css";
+import { AuthType } from "../types";
 
-const Header = () => {
+interface RootState {
+  auth: AuthType;
+}
+const mapState = (state: RootState) => ({
+  auth: state.auth,
+});
+
+const connector = connect(mapState, { logout });
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const Header = ({ auth, logout }: PropsFromRedux) => {
   const { theme, setTheme } = useTheme();
   let { pathname } = useLocation();
-
-  const signInHandler = () => {
-    console.log("signing in...");
-  };
 
   const themeIcon =
     theme === Theme.Dark ? (
@@ -39,16 +48,19 @@ const Header = () => {
           </Link>
         )}
 
-        <Link
-          to={"/auth"}
-          className="btn--auth col-grey-900"
-          onClick={signInHandler}
-        >
-          Sign In
-        </Link>
+        {!auth.isLoggedIn && (
+          <Link to={"/auth"} className="btn--auth col-grey-900">
+            Sign In
+          </Link>
+        )}
+        {auth.isLoggedIn && (
+          <button onClick={() => logout()} className="btn--auth col-grey-900">
+            Logout
+          </button>
+        )}
       </div>
     </header>
   );
 };
 
-export default Header;
+export default connector(Header);
