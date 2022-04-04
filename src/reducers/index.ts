@@ -18,7 +18,7 @@ const favoritesReducer = (state: Quote[] = [], action: FavoritesActions) => {
       });
       return [...arr];
     case "DATA_FROM_FIREBASE":
-      return Object.values(action.payload);
+      return [...Object.values(action.payload), ...state];
     case "CLEAR_FAVORITES":
       return [];
     default:

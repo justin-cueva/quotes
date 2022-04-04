@@ -45,7 +45,7 @@ const FavoriteQuotes = (props: PropsFromRedux) => {
     <div className="favorite-quotes__page">
       <div className="favorite-quotes">
         {favoritesExist && !props.auth.isLoggedIn && (
-          <h3>Sign In to save to favorites</h3>
+          <h3>Sign In or Create an Account to save to favorites</h3>
         )}
         {favoritesExist ? (
           currentPageFavorites().map((quote: Quote) => {
