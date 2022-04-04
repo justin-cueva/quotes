@@ -6,7 +6,7 @@ import { login as setLogin } from "../actions";
 import QuoteContainer from "./QuoteContainer";
 import FavoriteQuotes from "./FavoriteQuotes";
 import Header from "./Header";
-import SignIn from "./Auth";
+import Auth from "./Auth";
 import "../styles/App.css";
 import { ThemeContext, Theme } from "../hooks/Theme";
 import { AuthType } from "../types";
@@ -30,7 +30,7 @@ function App({ setLogin, auth }: PropsFromRedux) {
           <Routes>
             <Route path={"/"} element={<QuoteContainer />} />
             <Route path={"/favorites"} element={<FavoriteQuotes />} />
-            {!auth.isLoggedIn && <Route path={"/auth"} element={<SignIn />} />}
+            {!auth.isLoggedIn && <Route path={"/auth"} element={<Auth />} />}
             <Route path={"*"} element={<Navigate to={"/"} />} />
           </Routes>
         </BrowserRouter>
