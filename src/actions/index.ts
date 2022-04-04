@@ -38,18 +38,23 @@ export const getDataFromFirebase =
       `https://quote-generator-8312a-default-rtdb.firebaseio.com/${userId}.json`
     );
     const data = await response.json();
-    console.log(data);
 
-    dispatch({ type: "DATA_FROM_FIREBASE", payload: data });
+    if (data) dispatch({ type: "DATA_FROM_FIREBASE", payload: data });
   };
 
 export const login = (userId: string) => async (dispatch: any) => {
+  const response = await fetch(
+    `https://quote-generator-8312a-default-rtdb.firebaseio.com/${userId}.json`
+  );
+  const data = await response.json();
   localStorage.setItem("isLoggedIn", userId);
+  if (data) dispatch({ type: "DATA_FROM_FIREBASE", payload: data });
   dispatch({ type: "LOGIN", payload: userId });
 };
 
-export const logout = () => {
+export const logout = () => async (dispatch: any) => {
   localStorage.removeItem("isLoggedIn");
   console.log("removed");
-  return { type: "LOGOUT" };
+  dispatch({ type: "LOGOUT" });
+  dispatch({ type: "CLEAR_FAVORITES" });
 };

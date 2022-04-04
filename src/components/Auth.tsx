@@ -46,11 +46,12 @@ const Auth = ({ setLogin }: PropsFromRedux) => {
       const user = await signInWithEmailAndPassword(auth, email, password);
       console.log(user.user.uid);
       setLogin(user.user.uid);
+      clearFields();
       navigate("/");
     } catch (error) {
       console.error(error);
+      clearFields();
     }
-    clearFields();
   };
 
   const bg = theme === Theme.Light ? "bg-grey-100" : "bg-grey-900";
