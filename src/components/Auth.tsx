@@ -9,14 +9,14 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../firebase/firebase-config";
-import { login as setLogin } from "../actions";
+import login from "../actions/login";
 import "../styles/Auth.css";
 import { useTheme, Theme } from "../hooks/Theme";
 
-const connector = connect(null, { setLogin });
+const connector = connect(null, { login });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const Auth = ({ setLogin }: PropsFromRedux) => {
+const Auth = ({ login }: PropsFromRedux) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -32,7 +32,7 @@ const Auth = ({ setLogin }: PropsFromRedux) => {
     try {
       e.preventDefault();
       const user = await createUserWithEmailAndPassword(auth, email, password);
-      setLogin(user.user.uid);
+      login(user.user.uid);
       clearFields();
       navigate("/");
     } catch (error) {
@@ -40,11 +40,11 @@ const Auth = ({ setLogin }: PropsFromRedux) => {
     }
   };
 
-  const login = async (e: React.FormEvent<HTMLFormElement>) => {
+  const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       const user = await signInWithEmailAndPassword(auth, email, password);
-      setLogin(user.user.uid);
+      login(user.user.uid);
       clearFields();
       navigate("/");
     } catch (error) {
@@ -61,7 +61,7 @@ const Auth = ({ setLogin }: PropsFromRedux) => {
         <form
           className="form--auth"
           onSubmit={(e) => {
-            formState === "LOGIN" ? login(e) : register(e);
+            formState === "LOGIN" ? loginHandler(e) : register(e);
           }}
         >
           <h2 className={`auth__heading ${col}`}>

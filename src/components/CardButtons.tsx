@@ -3,7 +3,8 @@ import { connect, ConnectedProps } from "react-redux";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import "../styles/CardButtons.css";
-import { addToFavorites, removeFromFavorites } from "../actions/index";
+import removeFromFavorites from "../actions/removeFromFavorites";
+import addToFavorites from "../actions/addToFavorites";
 import { Quote, AuthType } from "../types";
 import { useTheme, Theme } from "../hooks/Theme";
 
