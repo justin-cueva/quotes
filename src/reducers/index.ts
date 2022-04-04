@@ -4,7 +4,8 @@ import { Quote } from "../types";
 
 type FavoritesActions =
   | { type: "ADD_TO_FAVORITES"; payload: string }
-  | { type: "REMOVE_FROM_FAVORITES"; payload: number };
+  | { type: "REMOVE_FROM_FAVORITES"; payload: number }
+  | { type: "DATA_FROM_FIREBASE"; payload: any };
 
 const favoritesReducer = (state: Quote[] = [], action: FavoritesActions) => {
   switch (action.type) {
@@ -14,8 +15,13 @@ const favoritesReducer = (state: Quote[] = [], action: FavoritesActions) => {
       const arr = state.filter((quote: Quote) => {
         return quote.id !== action.payload;
       });
-      console.log(arr === [...arr]);
       return [...arr];
+    case "DATA_FROM_FIREBASE":
+      console.log(action.payload);
+      const x = Object.values(action.payload);
+      console.log(x);
+
+      return x;
     default:
       return state;
   }

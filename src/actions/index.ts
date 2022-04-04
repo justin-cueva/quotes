@@ -26,9 +26,22 @@ export const removeFromFavorites =
     dispatch({ type: "REMOVE_FROM_FAVORITES", payload: id });
   };
 
-export const login = (userId: string) => {
+export const getDataFromFirebase =
+  () => async (dispatch: any, getState: any) => {
+    const { userId } = getState().auth;
+    console.log(userId);
+    const response = await fetch(
+      `https://quote-generator-8312a-default-rtdb.firebaseio.com/${userId}.json`
+    );
+    const data = await response.json();
+    console.log(data);
+
+    dispatch({ type: "DATA_FROM_FIREBASE", payload: data });
+  };
+
+export const login = (userId: string) => async (dispatch: any) => {
   localStorage.setItem("isLoggedIn", userId);
-  return { type: "LOGIN", payload: userId };
+  dispatch({ type: "LOGIN", payload: userId });
 };
 
 export const logout = () => {

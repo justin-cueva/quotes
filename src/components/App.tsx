@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
-import { login as setLogin } from "../actions";
+import { login as setLogin, getDataFromFirebase } from "../actions";
 import QuoteContainer from "./QuoteContainer";
 import FavoriteQuotes from "./FavoriteQuotes";
 import Header from "./Header";
@@ -11,13 +11,22 @@ import "../styles/App.css";
 import { ThemeContext, Theme } from "../hooks/Theme";
 import { AuthType } from "../types";
 
-function App({ setLogin, auth }: PropsFromRedux) {
+function App({ setLogin, auth, getDataFromFirebase }: PropsFromRedux) {
   const [theme, setTheme] = useState(Theme.Light);
 
+  const init = async () => {
+    try {
+      const userId = localStorage.getItem("isLoggedIn");
+      if (userId) await setLogin(userId);
+      if (userId) await getDataFromFirebase();
+      console.log(userId);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    const userId = localStorage.getItem("isLoggedIn");
-    if (userId) setLogin(userId);
-    console.log(userId);
+    init();
   }, []);
 
   return (
@@ -45,7 +54,7 @@ interface RootState {
 const mapStateToProps = (state: RootState) => {
   return { auth: state.auth };
 };
-const connector = connect(mapStateToProps, { setLogin });
+const connector = connect(mapStateToProps, { setLogin, getDataFromFirebase });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default connector(App);
