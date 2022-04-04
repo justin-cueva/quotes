@@ -26,5 +26,8 @@
 
 .btn--prev,
 .btn--next {
+  font-size: 1.6rem;
+  padding: 1rem 2rem;
   background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
