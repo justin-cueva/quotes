@@ -56,7 +56,7 @@ const FavoriteQuotes = (props: PropsFromRedux) => {
             );
           })
         ) : (
-          <p>add some quotes to favorites</p>
+          <p className={col}>add some quotes to favorites</p>
         )}
       </div>
       <div className="favorite-quotes__pagination">
