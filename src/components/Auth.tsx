@@ -32,25 +32,24 @@ const Auth = ({ setLogin }: PropsFromRedux) => {
     try {
       e.preventDefault();
       const user = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(user);
+      setLogin(user.user.uid);
+      clearFields();
       navigate("/");
     } catch (error) {
       console.error(error);
     }
-    clearFields();
   };
 
   const login = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user.user.uid);
       setLogin(user.user.uid);
+      clearFields();
       navigate("/");
     } catch (error) {
       console.error(error);
     }
-    clearFields();
   };
 
   const bg = theme === Theme.Light ? "bg-grey-100" : "bg-grey-900";
