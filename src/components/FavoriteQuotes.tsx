@@ -4,7 +4,7 @@ import { Quote, AuthType } from "../types";
 import { AiFillHeart } from "react-icons/ai";
 
 import "../styles/FavoriteQuotes.css";
-import { removeFromFavorites } from "../actions/index";
+import removeFromFavorites from "../actions/removeFromFavorites";
 import { useTheme, Theme } from "../hooks/Theme";
 
 const FavoriteQuotes = (props: PropsFromRedux) => {
@@ -56,7 +56,7 @@ const FavoriteQuotes = (props: PropsFromRedux) => {
             );
           })
         ) : (
-          <p>add some quotes to favorites</p>
+          <p className={col}>add some quotes to favorites</p>
         )}
       </div>
       <div className="favorite-quotes__pagination">

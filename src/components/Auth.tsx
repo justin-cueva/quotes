@@ -9,18 +9,16 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../firebase/firebase-config";
-import { login as setLogin } from "../actions";
+import login from "../actions/login";
 import "../styles/Auth.css";
 import { useTheme, Theme } from "../hooks/Theme";
 
-const connector = connect(null, { setLogin });
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const Auth = ({ setLogin }: PropsFromRedux) => {
+const Auth = ({ login }: PropsFromRedux) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [formState, setFormState] = useState<string>("LOGIN");
+  const [error, setError] = useState<any>();
   const { theme } = useTheme();
 
   const clearFields = () => {
@@ -32,22 +30,26 @@ const Auth = ({ setLogin }: PropsFromRedux) => {
     try {
       e.preventDefault();
       const user = await createUserWithEmailAndPassword(auth, email, password);
-      setLogin(user.user.uid);
+      login(user.user.uid);
       clearFields();
+      setError("");
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
+      setError(error.message);
       console.error(error);
     }
   };
 
-  const login = async (e: React.FormEvent<HTMLFormElement>) => {
+  const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       const user = await signInWithEmailAndPassword(auth, email, password);
-      setLogin(user.user.uid);
+      login(user.user.uid);
       clearFields();
+      setError("");
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
+      setError(error.message);
       console.error(error);
     }
   };
@@ -61,12 +63,13 @@ const Auth = ({ setLogin }: PropsFromRedux) => {
         <form
           className="form--auth"
           onSubmit={(e) => {
-            formState === "LOGIN" ? login(e) : register(e);
+            formState === "LOGIN" ? loginHandler(e) : register(e);
           }}
         >
           <h2 className={`auth__heading ${col}`}>
             {formState === "LOGIN" ? "Login" : "Sign Up"}
           </h2>
+          {error && <span className="error">{error}</span>}
           <div className="auth__fields">
             <div className="auth__field">
               <label className={col} htmlFor="email">
@@ -120,5 +123,8 @@ const Auth = ({ setLogin }: PropsFromRedux) => {
     </div>
   );
 };
+
+const connector = connect(null, { login });
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default connector(Auth);

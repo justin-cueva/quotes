@@ -67,3 +67,7 @@
   background-color: transparent;
   border: none;
 }
+
+.error {
+  color: #ff0000;
+}
