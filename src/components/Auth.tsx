@@ -13,14 +13,12 @@ import login from "../actions/login";
 import "../styles/Auth.css";
 import { useTheme, Theme } from "../hooks/Theme";
 
-const connector = connect(null, { login });
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
 const Auth = ({ login }: PropsFromRedux) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [formState, setFormState] = useState<string>("LOGIN");
+  const [error, setError] = useState<any>();
   const { theme } = useTheme();
 
   const clearFields = () => {
@@ -34,8 +32,10 @@ const Auth = ({ login }: PropsFromRedux) => {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       login(user.user.uid);
       clearFields();
+      setError("");
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
+      setError(error.message);
       console.error(error);
     }
   };
@@ -46,8 +46,10 @@ const Auth = ({ login }: PropsFromRedux) => {
       const user = await signInWithEmailAndPassword(auth, email, password);
       login(user.user.uid);
       clearFields();
+      setError("");
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
+      setError(error.message);
       console.error(error);
     }
   };
@@ -67,6 +69,7 @@ const Auth = ({ login }: PropsFromRedux) => {
           <h2 className={`auth__heading ${col}`}>
             {formState === "LOGIN" ? "Login" : "Sign Up"}
           </h2>
+          {error && <span className="error">{error}</span>}
           <div className="auth__fields">
             <div className="auth__field">
               <label className={col} htmlFor="email">
@@ -120,5 +123,8 @@ const Auth = ({ login }: PropsFromRedux) => {
     </div>
   );
 };
+
+const connector = connect(null, { login });
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default connector(Auth);
