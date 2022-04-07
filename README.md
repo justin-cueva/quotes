@@ -1,9 +1,9 @@
 # A Quote Generator
 
-link to live site: https://quote-generator-by-justin.netlify.app/
-if you don't want to create an account login with
-email: test@test.com 
-pass: 123abc
+* link to live site: https://quote-generator-by-justin.netlify.app/
+* if you don't want to create an account login with
+* email: test@test.com 
+* pass: 123abc
 
 ## Tech used
 
