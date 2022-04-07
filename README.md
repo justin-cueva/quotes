@@ -7,17 +7,17 @@
 
 ## Tech used
 
-react
-redux
-typescript (first project with typescript)
-firebase
-custom css (no library)
+* react
+* redux
+* typescript (first project with typescript)
+* firebase
+* custom css (no library)
 
 ## Features
 
-mobile first design
-save your quotes to firebase when logged in
-generates a random quote from https://api.adviceslip.com
-pagination on favorites page for when there are more than 6 quotes saved
-auth validation with firebase
-light and dark themes
+* mobile first design
+* save your quotes to firebase when logged in
+* generates a random quote from https://api.adviceslip.com
+* pagination on favorites page for when there are more than 6 quotes saved
+* auth validation with firebase
+* light and dark themes
