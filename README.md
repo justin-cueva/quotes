@@ -1,5 +1,6 @@
 # A Quote Generator
 
+An app where you can generate a random piece of advice.
 * link to live site: https://quote-generator-by-justin.netlify.app/
 <br/>
 if you don't want to create an account login with
